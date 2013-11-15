@@ -21,32 +21,46 @@
 	</div>
 
 	<script type="text/javascript">
-	
+
 	function redraw(data){
-		console.log(data);
-		var teams = [];
+		var max = 0;
+		$('#leaderboard').empty();
 		for(var n in data){
-			teams.push(data[n]);
+			if (data[n].points > max) max = data[n].points;
+		}
+		for(var n in data){
+
+			var width = (data[n].points / max) * 100;
+
+			var row = $('<div class="row-fluid"></div>');
+			row.append('<div class="span2">'+ data[n].name  +'</div>')
+			var bar = $('<div class="progress progress-success span10" style="margin-bottom: 9px;"></div>');
+			bar.append('<div class="bar" style="width: ' + width + '%"></div>');
+			row.append(bar);
+			$('#leaderboard').append(row);
+			console.log(data[n]);
 		}
 
-		// TODO: now that there's an array of teams and their points, 
-		//       1) create a leaderboard in #leaderboard, and 
+
+
+		// TODO: now that there's an array of teams and their points,
+		//       1) create a leaderboard in #leaderboard, and
 		//       2) animate the bars based on a fixed width (1st place = 100%)
-		
-		// You can use Bootstrap's progress bars: 
+
+		// You can use Bootstrap's progress bars:
 		// http://getbootstrap.com/2.3.2/components.html#progress
 		// The template is in #leaderboard already, but commented out
-		
+
 		// 3rd teammate : uncomment the setInterval function to enable real-time polling
 		//  then ask the judge to award us points, so he can see the board update in real time
-		
+
 		//
 
 	}
-	
-	
+
+
 	$(document).ready(function(){
-	
+
 
 		setTimeout(function(){
 	        $.ajax({
@@ -55,7 +69,7 @@
 	            dataType: 'json',
 	            success: redraw,
 	            error: function (msg) {
-	            	console.log(msg);
+	            	redraw(msg);
 	            }
 	        });
 	    }, 1000);
