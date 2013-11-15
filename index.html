@@ -1,0 +1,79 @@
+<html>
+<head>
+	<title>Hacker relay race</title>
+    <link rel="stylesheet" href="bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="bootstrap-responsive.min.css" type="text/css">
+   	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+   	<script type="text/javascript" src="bootstrap.min.js"></script>
+
+</head>
+<body>
+
+	<div id="leaderboard">
+<!--
+		<div class="row-fluid">
+			<div class="span2">TEAM NAME</div>
+		 	<div class="progress progress-success span10" style="margin-bottom: 9px;">
+				<div class="bar" style="width: 20%"></div>
+			</div>
+		</div>
+-->
+	</div>
+
+	<script type="text/javascript">
+	
+	function redraw(data){
+		console.log(data);
+		var teams = [];
+		for(var n in data){
+			teams.push(data[n]);
+		}
+
+		// TODO: now that there's an array of teams and their points, 
+		//       1) create a leaderboard in #leaderboard, and 
+		//       2) animate the bars based on a fixed width (1st place = 100%)
+		
+		// You can use Bootstrap's progress bars: 
+		// http://getbootstrap.com/2.3.2/components.html#progress
+		// The template is in #leaderboard already, but commented out
+		
+		// 3rd teammate : uncomment the setInterval function to enable real-time polling
+		//  then ask the judge to award us points, so he can see the board update in real time
+		
+		//
+
+	}
+	
+	
+	$(document).ready(function(){
+	
+
+		setTimeout(function(){
+	        $.ajax({
+	            type: 'GET',
+	            url: 'http://judgingjs.herokuapp.com/leaderboard.json',
+	            dataType: 'json',
+	            success: redraw,
+	            error: function (msg) {
+	            	console.log(msg);
+	            }
+	        });
+	    }, 1000);
+/*
+		setInterval(function(){
+	        $.ajax({
+	            type: 'GET',
+	            url: 'http://judgingjs.herokuapp.com/leaderboard.json',
+	            dataType: 'json',
+	            success: redraw,
+	            error: function (msg) {
+	            	console.log(msg);
+	            }
+	        });
+	    }, 5000);
+*/
+	});
+	</script>
+
+</body>
+</html>
